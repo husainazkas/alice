@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert' show JsonEncoder;
-import 'dart:io' show Directory, File, FileMode, IOSink;
+import 'dart:io' show Directory, File, FileMode, IOSink, Platform;
 
 import 'package:alice/core/alice_utils.dart';
 import 'package:alice/helper/alice_conversion_helper.dart';
@@ -39,10 +39,20 @@ class AliceExportHelper {
       );
     }
 
+    final size = switch (View.of(context)) {
+      final view => view.physicalSize / view.devicePixelRatio,
+    };
     await SharePlus.instance.share(
       ShareParams(
         text: callLog,
         subject: context.i18n(AliceTranslationKey.emailSubject),
+        sharePositionOrigin:
+            Platform.isIOS
+                ? switch (context.findRenderObject() as RenderBox?) {
+                  final box? => box.localToGlobal(Offset.zero) & box.size,
+                  null => Rect.fromLTWH(0.0, 0.0, size.width, size.height),
+                }
+                : null,
       ),
     );
 
