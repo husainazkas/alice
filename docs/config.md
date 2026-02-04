@@ -51,13 +51,26 @@ default disabled):
 Alice alice = Alice(configuration: AliceConfiguation(showInspectorOnShake: true));
 ```
 
-If you want to pass another notification icon, you can use `notificationIcon` parameter. Default
-value is @mipmap/ic_launcher.
+If you want to pass another notification icon, you can use `notificationIcon` parameter for the number 1 (small icon) or `notificationLargeIcon` parameter for the number 4 (large icon). Default
+value is @mipmap/ic_launcher for small icon.
+
+<div align="center">
+<img src="https://developer.android.com/static/images/ui/notifications/notification-callouts_2x.png" height="120px"/>
+
+*src: https://developer.android.com/develop/ui/views/notifications#Templates*
+
+</div>
 
 ```dart
 
-Alice alice = Alice(configuration: AliceConfiguration(notificationIcon: "myNotificationIconResourceName"));
+Alice alice = Alice(
+    configuration: AliceConfiguration(
+        notificationIcon: "myNotificationSmallIconResourceName",
+        notificationLargeIcon: "myNotificationLargeIconResourceName",
+    ),
+);
 ```
+
 
 If you want to change the Directionality of Alice, you can use the `directionality` parameter. If
 the parameter is set to null, the Directionality of the app will be used.
