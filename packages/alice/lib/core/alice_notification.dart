@@ -3,7 +3,7 @@ import 'package:alice/core/alice_utils.dart';
 import 'package:alice/helper/operating_system.dart';
 import 'package:alice/model/alice_translation.dart';
 import 'package:alice/ui/common/alice_context_ext.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// Helper for displaying local notifications.
@@ -73,7 +73,7 @@ class AliceNotification {
           macOS: initializationSettingsMacOS,
         );
     _flutterLocalNotificationsPlugin?.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
     );
     _requestNotificationPermissions();
@@ -143,12 +143,12 @@ class AliceNotification {
       _isNotificationProcessing = true;
 
       await _flutterLocalNotificationsPlugin?.show(
-        0,
-        context
+        id: 0,
+        title: context
             .i18n(AliceTranslationKey.notificationTotalRequests)
             .replaceAll(_callCount, stats.total.toString()),
-        message,
-        _notificationDetails,
+        body: message,
+        notificationDetails: _notificationDetails,
         payload: _payload,
       );
 
